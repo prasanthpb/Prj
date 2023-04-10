@@ -1,0 +1,22 @@
+5)	naïve Bayesian classifier
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+
+
+# Load the iris dataset 
+iris = load_iris()
+
+# Split the data into training and test sets
+X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2)
+
+
+# Train a Gaussian Naive Bayes classifier gnb = GaussianNB()
+ 
+gnb.fit(X_train, y_train)
+
+
+# Test the classifier on the test data y_pred = gnb.predict(X_test)
+
+print(y_pred)
+print("ACCURACY",gnb.score(X_test,y_test))

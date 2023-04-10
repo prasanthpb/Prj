@@ -1,0 +1,61 @@
+7)	Bayesian network
+import pandas as pd
+from sklearn.naive_bayes import GaussianNB 
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split 
+from sklearn.metrics import accuracy_score
+from pgmpy.estimators import MaximumLikelihoodEstimator 
+from pgmpy.models import BayesianModel
+from pgmpy.inference import VariableElimination
+
+
+# Load the heart disease dataset
+df = pd.read_csv('heart_disease.csv')
+
+
+# Encode the categorical variables using LabelEncoder le = LabelEncoder()
+for column in df.columns:
+if df[column].dtype == 'object':
+df[column] = le.fit_transform(df[column])
+
+
+# Split the data into inputs and targets
+ 
+inputs = df.iloc[:, :-1] 
+targets = df.iloc[:, -1]
+
+# Split the data into training and testing sets
+train_inputs, test_inputs, train_targets, test_targets = train_test_split(inputs, targets, test_size=0.2, random_state=42)
+
+
+# Create a Bayesian network model using the pgmpy library
+model = BayesianModel([('age', 'heartdisease'), ('sex', 'heartdisease'), ('exang', 'heartdisease'), ('cp', 'heartdisease'), ('heartdisease', 'restecg'), ('heartdisease', 'chol')])
+
+
+# Learn the parameters of the model using Maximum Likelihood Estimation 
+
+model.fit(df, estimator=MaximumLikelihoodEstimator)
+
+# Infer the posterior probabilities of the target variable using Variable Elimination 
+
+infer = VariableElimination(model)
+posterior = infer.query(['heartdisease'], evidence={'age': 28, 'sex': 1, 'exang': 1, 'cp': 2, 'restecg': 1,
+'chol': 200})
+
+
+print('Probability of heart disease:', posterior.values[1])
+
+
+# Train a Gaussian Naive Bayes classifier using the training data 
+
+nb = GaussianNB()
+nb.fit(train_inputs, train_targets)
+
+
+# Test the classifier using the testing data predictions = nb.predict(test_inputs)
+
+# Calculate the accuracy of the predictions
+accuracy = accuracy_score(test_targets, predictions)
+
+
+print('Accuracy:', accuracy)

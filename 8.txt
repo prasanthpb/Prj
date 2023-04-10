@@ -1,0 +1,22 @@
+8)	EM algorithm
+from sklearn.datasets import make_blobs 
+from sklearn.mixture import GaussianMixture
+
+# Generate sample data
+X, _ = make_blobs(n_samples=500, centers=3, random_state=42)
+
+
+# Create a Gaussian Mixture Model with 3 components
+gmm = GaussianMixture(n_components=3, random_state=42) 
+
+# Fit the GMM to the data using the EM algorithm
+gmm.fit(X)
+
+
+# Predict the cluster labels of the data 
+labels = gmm.predict(X)
+
+# Print the parameters learned by the GMM 
+print('Means:', gmm.means_)
+print('Covariances:', gmm.covariances_) 
+print('Weights:', gmm.weights_)

@@ -1,0 +1,38 @@
+
+
+1)	FIND S:
+2)	import pandas as pd
+3)	import numpy as np
+4)
+5)	#to read the data in the csv file
+6)	data = pd.read_csv("data.csv")
+7)	print(data,"n")
+8)
+9)	#making an array of all the attributes
+10)	d = np.array(data)[:,:-1]
+11)	print("n The attributes are: ",d)
+12)	
+13)	#segragating the target that has positive and negative examples
+14)	target = np.array(data)[:,-1]
+15)	print("n The target is: ",target)
+16)	
+17)	#training function to implement find-s algorithm
+18) def	train(c,t):
+19)	for i, val in enumerate(t):
+20)	if val == "Yes":
+21)	specific_hypothesis = c[i].copy()
+22)	break
+23)	
+24)	for i, val in enumerate(c):
+25)	if t[i] == "Yes":
+26)	for x in range(len(specific_hypothesis)):
+27)	if val[x] != specific_hypothesis[x]:
+28)	specific_hypothesis[x] = '?'
+29)	else:
+30)	pass
+31)	
+32)	return specific_hypothesis
+ 
+33)
+34)	#obtaining the final hypothesis
+35)	print("n The final hypothesis is:",train(d,target))

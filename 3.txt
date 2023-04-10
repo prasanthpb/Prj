@@ -1,0 +1,16 @@
+3)	ID3
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split from sklearn.datasets import load_iris
+# Load the iris dataset 
+iris = load_iris()
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.3)
+
+# Create an instance of the DecisionTreeClassifier class
+clf = DecisionTreeClassifier(criterion='entropy') 
+# Train the model using the training data 
+clf.fit(X_train, y_train)
+# Predict the classes of the testing data
+ y_pred = clf.predict(X_test)
+# Print the accuracy score of the model
+print("Accuracy:", clf.score(X_test, y_test))

@@ -1,0 +1,21 @@
+2)	Candidate-Elimination algorithm
+import numpy as np
+def candidate_elimination(examples):
+specific_hypothesis = np.array(['0'] * len(examples[0][0])) 
+general_hypothesis = np.array(['?'] * len(examples[0][0]))
+
+# Iterate over the examples for x, y in examples:
+if y == '1':
+# If the example is positive, update the specific boundary 
+for i in range(len(x)):
+if x[i] != specific_hypothesis[i]:
+ specific_hypothesis[i] = '?'
+# Update the general boundary for i in range(len(x)):
+if specific_hypothesis[i] == '?': 
+general_hypothesis[i] = '?'
+else:
+# If the example is negative, update the general boundary 
+for i in range(len(x)):
+if x[i] != specific_hypothesis[i]:
+general_hypothesis[i] = specific_hypothesis[i]
+return tuple(specific_hypothesis), tuple(general_hypothesis)
