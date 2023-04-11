@@ -1,0 +1,46 @@
+CANDITATE-ELIMINATION ALGORITHM
+PROGRAM:
+import numpy as np
+# Define the training examples
+training_examples = [
+    (['Sunny', 'Warm', 'Normal', 'Strong', 'Warm', 'Same'], 'Yes'),
+    (['Sunny', 'Warm', 'High', 'Strong', 'Warm', 'Same'], 'Yes'),
+    (['Rainy', 'Cold', 'High', 'Strong', 'Warm', 'Change'], 'No'),
+    (['Sunny', 'Warm', 'High', 'Strong', 'Cool', 'Change'], 'Yes'),
+]
+def candidate_elimination(examples):
+     specific_hypothesis = ['Sunny', 'Warm', 'Normal', 'Strong', 'Warm', 'Same']
+    general_hypothesis = ['?','?','?','?','?','?']
+
+ for x, y in examples:
+        if y == 'Yes':
+            for i in range(len(x)):
+                if x[i] != specific_hypothesis[i]:
+                    specific_hypothesis[i] = '?'
+         
+            for i in range(len(x)):
+                if specific_hypothesis[i] == '?' and x[i] == general_hypothesis[i]:
+                    general_hypothesis[i] = x[i]
+        else:
+            for i in range(len(x)):
+                if x[i] != specific_hypothesis[i] :
+                    general_hypothesis[i] = '?'
+                else :
+                    general_hypothesis[i] = specific_hypothesis[i]
+                    
+        print(f'Specific hypothesis: {specific_hypothesis}')
+        print(f'General hypothesis: {general_hypothesis}\n')
+
+candidate_elimination(training_examples)
+OUTPUT:
+Specific hypothesis: ['Sunny', 'Warm', 'Normal', 'Strong', 'Warm', 'Same']
+General hypothesis: ['?', '?', '?', '?', '?', '?']
+
+Specific hypothesis: ['Sunny', 'Warm', '?', 'Strong', 'Warm', 'Same']
+General hypothesis: ['?', '?', '?', '?', '?', '?']
+
+Specific hypothesis: ['Sunny', 'Warm', '?', 'Strong', 'Warm', 'Same']
+General hypothesis: ['?', '?', '?', 'Strong', 'Warm', '?']
+
+Specific hypothesis: ['Sunny', 'Warm', '?', 'Strong', '?', '?']
+General hypothesis: ['?', '?', '?', 'Strong', 'Warm', '?']

@@ -1,0 +1,25 @@
+1)	FINDS-ALGORITHM
+
+PROGRAM:
+import pandas as pd
+# Read the dataset from CSV file
+data = pd.read_csv(r'C:/Users/Documents/data.csv')
+# Extract the features and target
+X = data.iloc[:, :-1].values
+y = data.iloc[:, -1].values
+# Initialize the hypothesis with the first positive example
+hypothesis = None
+for i in range(len(X)):
+    if y[i] == 'Yes':
+        hypothesis = list(X[i])
+        break
+# Refine the hypothesis by checking all positive examples
+for i in range(len(X)):
+    if y[i] == 'Yes':
+        for j in range(len(X[i])):
+            if X[i][j] != hypothesis[j]:
+                hypothesis[j] = '?'
+# Print the final hypothesis
+print('The final hypothesis is:', hypothesis)
+OUTPUT:
+The final Hypothesis: ['sunny', 'warm', '?', 'strong', '?', '?']
